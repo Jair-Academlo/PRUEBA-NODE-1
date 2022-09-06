@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { db } = require('./utils/database');
+const { registrationRouter } = require('./routes/registration.router');
 
 //Initial server Express
 const app = express();
@@ -9,7 +10,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-//database autenticate,. sync
+//Endpoonts
+app.use('/api/v1/registration', registrationRouter);
+
+//database autenticate, sync
 db.authenticate()
   .then(() => {
     console.log('datos autenticados'.magenta);
