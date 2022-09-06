@@ -49,4 +49,59 @@ const findRegistrationById = async (req, res) => {
   }
 };
 
-module.exports = { AllRegistration, findRegistrationById, createRegister };
+const exitRegister = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const exitId = await Registration.findOne({ where: { id } });
+    const { exitTime } = req.body;
+
+    if (!exitId) {
+      return res.status(404).json({
+        message: 'Id no se pudo actualizar',
+        status: 'failed',
+      });
+    } else {
+      res.status(200).json({
+        message: 'operacion exitosa',
+        status: 'fue satisfactorio',
+        exitId,
+      });
+    }
+
+    await exitId.update({ exitTime, status: 'out' });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const cancelledRegister = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const cancelledId = await Registration.findOne({ where: { id } });
+
+    if (!cancelledId) {
+      return res.status(404).json({
+        message: 'el Id no fue encontrado',
+        status: 'failed',
+      });
+    } else {
+      res.status(200).json({
+        message: 'el Id fue cancelado',
+        status: 'fue exitoso',
+        cancelledId,
+      });
+    }
+
+    await cancelledId.update({ status: 'cancelled' });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports = {
+  AllRegistration,
+  findRegistrationById,
+  createRegister,
+  exitRegister,
+  cancelledRegister,
+};
