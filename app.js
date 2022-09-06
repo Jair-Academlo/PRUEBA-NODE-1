@@ -20,7 +20,7 @@ db.authenticate()
   })
   .catch(err => console.log(err));
 
-db.sync()
+db.sync({ force: false })
   .then(() => {
     console.log('base sincronizada'.magenta);
   })

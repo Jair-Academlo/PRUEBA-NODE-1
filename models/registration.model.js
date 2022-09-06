@@ -13,7 +13,7 @@ const Registration = db.define('registration', {
     type: DataTypes.DATE,
   },
   exitTime: {
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.DATE,
   },
   status: {
